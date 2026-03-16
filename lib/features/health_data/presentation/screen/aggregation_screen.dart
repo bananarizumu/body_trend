@@ -6,6 +6,7 @@ import '../../domain/entity/aggregation_period.dart';
 import '../../domain/entity/metric_type.dart';
 import '../provider/aggregation_providers.dart';
 import '../state/aggregation_screen_state.dart';
+import '../widget/metric_line_chart.dart';
 
 class AggregationScreen extends ConsumerWidget {
   const AggregationScreen({super.key});
@@ -132,9 +133,15 @@ class AggregationScreen extends ConsumerWidget {
           ),
         ),
         const SizedBox(height: 8),
+        MetricLineChart(
+          data: data,
+          metricType: metricType,
+          period: period,
+        ),
+        const Divider(height: 1),
         Expanded(
           child: data.isEmpty
-              ? const Center(child: Text('データがありません'))
+              ? const SizedBox.shrink()
               : ListView.separated(
                   padding: const EdgeInsets.all(16),
                   itemCount: data.length,

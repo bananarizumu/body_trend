@@ -20,13 +20,13 @@ final getAggregatedHealthDataProvider = Provider<GetAggregatedHealthData>((
 
 final aggregationScreenProvider =
     StateNotifierProvider<AggregationScreenNotifier, AggregationScreenState>((
-      ref,
-    ) {
-      return AggregationScreenNotifier(
-        ref.watch(getAggregatedHealthDataProvider),
-        ref.watch(healthDataRepositoryProvider),
-      );
-    });
+  ref,
+) {
+  return AggregationScreenNotifier(
+    ref.watch(getAggregatedHealthDataProvider),
+    ref.watch(healthDataRepositoryProvider),
+  );
+});
 
 class AggregationScreenNotifier extends StateNotifier<AggregationScreenState> {
   final GetAggregatedHealthData _getAggregatedHealthData;
@@ -36,7 +36,7 @@ class AggregationScreenNotifier extends StateNotifier<AggregationScreenState> {
   AggregationPeriod _period = AggregationPeriod.week;
 
   AggregationScreenNotifier(this._getAggregatedHealthData, this._repository)
-    : super(const AggregationScreenLoading()) {
+      : super(const AggregationScreenLoading()) {
     load();
   }
 
