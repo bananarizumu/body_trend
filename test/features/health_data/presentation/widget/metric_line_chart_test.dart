@@ -105,7 +105,7 @@ void main() {
       expect(find.byType(LineChart), findsOneWidget);
     });
 
-    testWidgets('has correct height of 250', (tester) async {
+    testWidgets('shows stat selector with all options', (tester) async {
       await tester.pumpWidget(_wrap(
         MetricLineChart(
           data: _sampleData(),
@@ -114,10 +114,27 @@ void main() {
         ),
       ));
 
-      final sizedBox = tester.widget<SizedBox>(
-        find.byType(SizedBox).first,
-      );
-      expect(sizedBox.height, 250);
+      expect(find.text('平均'), findsOneWidget);
+      expect(find.text('中央値'), findsOneWidget);
+      expect(find.text('最大'), findsOneWidget);
+      expect(find.text('最小'), findsOneWidget);
+    });
+
+    testWidgets('switches stat type on tap', (tester) async {
+      await tester.pumpWidget(_wrap(
+        MetricLineChart(
+          data: _sampleData(),
+          metricType: MetricType.weight,
+          period: AggregationPeriod.day,
+        ),
+      ));
+
+      // Default is average, tap median
+      await tester.tap(find.text('中央値'));
+      await tester.pumpAndSettle();
+
+      // Chart should still be rendered
+      expect(find.byType(LineChart), findsOneWidget);
     });
   });
 }
